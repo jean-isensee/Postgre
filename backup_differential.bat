@@ -1,11 +1,10 @@
 @echo off
-setlocal enabledelayedexpansion
 
 :: Set PostgreSQL credentials and backup path
 set PG_HOST=localhost
 set PG_PORT=5432
 set PG_USER=your_username
-set PG_PASSWORD=your_password
+for /f "delims=" %%i in ('powershell -Command "Get-Content 'C:\path\to\password.txt' | ConvertTo-SecureString | ConvertFrom-SecureString -AsPlainText"') do set PGPASSWORD=%%i
 set PG_DATABASE=your_database
 set BACKUP_DIR=C:\backups\postgresql
 
@@ -22,10 +21,10 @@ set BACKUP_FILE=%BACKUP_DIR%\backup_%PG_DATABASE%_%datestamp%.sql
 
 :: Check if the backup was successful
 if %errorlevel% neq 0 (
-    echo Backup failed!
+    %BACKUP_DIR$\scripts\mailsend.cmd "Diff Backup Falhou" "Diff Backup Falhou. Errorlevel %errorlevel%"
     exit /b %errorlevel%
 ) else (
-    echo Backup completed: %BACKUP_FILE%
+    %BACKUP_DIR$\scripts\mailsend.cmd "Diff Backup Completado" "Diff Backup Completado com sucesso"
 )
 
 exit /b 0

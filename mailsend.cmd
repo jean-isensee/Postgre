@@ -1,5 +1,7 @@
 REM 
 REM Send Notification mail
+REM Parameters %1 is the subject of email.
+REM            %2 is the body of email.
 REM
 set mailsenderdir=directory where mailsend program are installed
 set mailsender=mailsend.exe

@@ -1,6 +1,6 @@
 @echo off
 REM Set the PostgreSQL environment variables
-set PGPASSWORD=your_password
+for /f "delims=" %%i in ('powershell -Command "Get-Content 'C:\path\to\password.txt' | ConvertTo-SecureString | ConvertFrom-SecureString -AsPlainText"') do set PGPASSWORD=%%i
 set PGUSER=your_username
 set PGHOST=localhost
 set PGPORT=5432

@@ -9,8 +9,12 @@ set PGDATABASE=postgres
 REM Define backup directory
 set BACKUP_DIR=C:\path\to\backup\directory
 
+REM Create a timestamp for the backup file
+for /f "tokens=2 delims==." %%I in ('wmic OS Get localdatetime /value') do set datetime=%%I
+set datestamp=%datetime:~0,8%_%datetime:~8,6%
+
 REM Define backup filename (with date and time)
-set BACKUP_FILE=%BACKUP_DIR%\pg_dumpall_%DATE%_%TIME%.sql
+set BACKUP_FILE=%BACKUP_DIR%\FULL_%datestamp%.sql
 
 REM Run pg_dumpall to back up the database
 pg_dumpall -h %PGHOST% -p %PGPORT% -U %PGUSER% -f %BACKUP_FILE%

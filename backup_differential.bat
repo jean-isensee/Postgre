@@ -21,10 +21,10 @@ set BACKUP_FILE=%BACKUP_DIR%\backup_%PG_DATABASE%_%datestamp%.sql
 
 :: Check if the backup was successful
 if %errorlevel% neq 0 (
-    %BACKUP_DIR$\scripts\mailsend.cmd "Diff Backup Falhou" "Diff Backup Falhou. Errorlevel %errorlevel%"
+    %BACKUP_DIR%\scripts\mailsend.cmd "Diff Backup Falhou" "Diff Backup Falhou. Errorlevel %errorlevel%"
     exit /b %errorlevel%
 ) else (
-    %BACKUP_DIR$\scripts\mailsend.cmd "Diff Backup Completado" "Diff Backup Completado com sucesso"
+    %BACKUP_DIR%\scripts\mailsend.cmd "Diff Backup Completado" "Diff Backup Completado com sucesso"
 )
 
 exit /b 0

@@ -21,7 +21,7 @@ pg_dumpall -h %PGHOST% -p %PGPORT% -U %PGUSER% -f %BACKUP_FILE%
 
 REM Check if backup was successful
 if %errorlevel% neq 0 (
-    %BACKUP_DIR$\scripts\mailsend.cmd "Full Backup Falhou" "Full Backup Falhou. Errorlevel %errorlevel%"
+    %BACKUP_DIR%\scripts\mailsend.cmd "Full Backup Falhou" "Full Backup Falhou. Errorlevel %errorlevel%"
     exit /b %errorlevel%
 )
 
@@ -29,5 +29,5 @@ REM Delete files older than 48 hours
 forfiles /p "%BACKUP_DIR%" /s /m *.sql /d -2 /c "cmd /c del @path"
 
 REM Done
-%BACKUP_DIR$\scripts\mailsend.cmd "Full Backup Completado" "Full Backup Completadp com Sucesso."
+%BACKUP_DIR%\scripts\mailsend.cmd "Full Backup Completado" "Full Backup Completado com Sucesso."
 exit /b 0
